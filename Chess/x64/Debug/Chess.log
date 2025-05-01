@@ -1,2 +1,4 @@
 ﻿  Source.cpp
+D:\Projects\C++_Projects\Chess\Source.cpp(311,1): warning C4715: 'checkab': not all control paths return a value
+D:\Projects\C++_Projects\Chess\Source.cpp(327,1): warning C4715: 'checkaw': not all control paths return a value
   Chess.vcxproj -> D:\Projects\C++_Projects\Chess\x64\Debug\Chess.exe
