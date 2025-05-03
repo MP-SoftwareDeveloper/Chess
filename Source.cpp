@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <Windows.h> // to be able use handle colors job
+#include <fstream>   // files related actions
 #define re return
 using namespace std;
 
@@ -1476,7 +1477,7 @@ int main()
 {
 	
 	SetConsoleTextAttribute(o, consoleTExtColor);
-	
+	int rang = consoleTExtColor;
 	while (1)
 	{
 		cout << "1 new game\n";
@@ -1498,6 +1499,25 @@ int main()
 				bool check = 0;
 				string s;
 				cin >> s;
+				if (s == "save")
+				{
+					cout << "saved...\n";
+					ofstream file("saveGame.txt"); // ofstream output- ifstream input
+					if (!file )
+					{
+						cout << "Error............no file saved";
+					}
+					else
+					{
+						for (int i = 0;i < 64; i++)
+							file << a[i] << endl;
+						file << turn << endl;
+						file<< rang << endl;
+					}
+					break;
+				}
+				else
+				{
 				int i = 0, j = 0;
 				/*exmple input from a player for moving b2toc2
 				* 97 is a constant number to convert a digit to character
@@ -1633,11 +1653,198 @@ int main()
 				}
 				else
 					cout << "Error in Origin positioning\n";
+				}
+				
 			}
 		}
 		if (dastor == 2)
 		{
+			consoleTExtColor = 15;
+			SetConsoleTextAttribute(o, consoleTExtColor);			
+			int a[64];
+			bool turn;
+			ifstream file("saveGame.txt"); // ofstream output- ifstream input
+			if (!file)
+			{
+				cout << "Error............no file loaded";
+			}
+			else
+			{
+				int l;
+				for (int i = 0; i < 64; i++)
+				{
+					file >> l;
+					a[i] = l;
+				}
+				file >> l;
+				turn = l;
+				file >> l;
+				rang = l;
+			}
+			
+			print(a);
+			while (1)
+			{
+				bool check = 0;
+				string s;
+				cin >> s;
+				if (s == "save")
+				{
+					cout << "saved...\n";
+					ofstream file("saveGame.txt"); // ofstream output- ifstream input
+					if (!file)
+					{
+						cout << "Error............no file saved";
+					}
+					else
+					{
+						for (int i = 0;i < 64; i++)
+							file << a[i] << endl;
+						file << turn << endl;
+						file << rang << endl;
+					}
+					break;
+				}
+				else
+				{
+					int i = 0, j = 0;
+					/*exmple input from a player for moving b2toc2
+					* 97 is a constant number to convert a digit to character
+					* 8 is number of column for chess
+					* 48 this is the accii code for numbers so each
+					*   number in character format will be converted to digit
+					* At the end there is -1 because array starts from element 0
+					* a[i] is origin before move
+					* a[j] is distination before move
+					*/
+					i = ((s[0] - 97) * 8) + (s[1] - 48) - 1;
+					j = ((s[4] - 97) * 8) + (s[5] - 48) - 1;
 
+					if (a[i] < 16)
+					{
+						if (turn)
+						{
+							if (!kishb(a))
+							{
+								if (a[i] == 1 || a[i] == 6) // if a[i] is black hourse
+								{
+									if (checkab(a, i, j))check = 1;
+								}
+								if (a[i] < 16 && a[i] >7)
+								{
+									if (checksb(a, i, j)) check = 1;
+								}
+								if (a[i] == 0 || a[i] == 7) // if a[i] is black Rook
+								{
+									if (checkrb(a, i, j))check = 1;
+								}
+								if (a[i] == 2 || a[i] == 5) // if a[i] is black hourse
+								{
+									if (checkfb(a, i, j))check = 1;
+								}
+								if (a[i] == 3) // if a[i] is black Queen. Queen moves are combination of Bishop and Rook
+								{
+									if (checkfb(a, i, j))check = 1;
+									if (checkrb(a, i, j))check = 1;
+								}
+								if (a[i] == 4) // if a[i] is black King.
+								{
+									if (checkkb(a, i, j))check = 1;
+								}
+								if (check)
+								{
+									turn = !turn;
+									int temp = a[i];
+									a[i] = a[j];
+									a[j] = temp;
+									/* if any pieces removed from the board should be replaced with 16 or any number between 16 to 47*/
+									if (a[i] < 16 || a[i]>47)a[i] = 16;
+									system("cls");
+									print(a);
+								}
+								else
+								{
+									cout << "Error in positioning\n";
+								}
+							}
+							else
+							{
+								if (mat1b(a) && mat2b(a) && mat3b(a))
+								{
+									cout << "Check mate";
+									break;
+								}
+								else
+									cout << "Kish......Kish......Kish...\n";
+							}
+						}
+						else
+							cout << "Error     Not your turn..!! \n";
+					}
+					else if (a[i] > 47)
+					{
+						if (!turn)
+						{
+							if (!kishw(a))
+							{
+								if (a[i] == 57 || a[i] == 62) //if a[i] is white hourse
+								{
+									if (checkaw(a, i, j))check = 1;
+								}
+
+								if (a[i] < 56 && a[i] >47)
+								{
+									if (checksw(a, i, j)) check = 1;
+								}
+
+								if (a[i] == 56 || a[i] == 63) //if a[i] is white Rook
+								{
+									if (checkrw(a, i, j))check = 1;
+								}
+
+								if (a[i] == 58 || a[i] == 61) //if a[i] is white hourse
+								{
+									if (checkfw(a, i, j))check = 1;
+								}
+
+								if (a[i] == 59) //if a[i] is white Queen. Queen moves are combination of Bishop and Rook
+								{
+									if (checkfw(a, i, j))check = 1;
+									if (checkrw(a, i, j))check = 1;
+								}
+
+								if (a[i] == 60) //if a[i] is white King.
+								{
+									if (checkkw(a, i, j))check = 1;
+								}
+								if (check)
+								{
+									turn = !turn;
+									int temp = a[i];
+									a[i] = a[j];
+									a[j] = temp;
+									if (a[i] < 16 || a[i]>47)a[i] = 16;// /////////////////////////////////////////////////
+									system("cls");
+									print(a);
+								}
+								else
+								{
+									cout << "Error in Destination positioning\n";
+								}
+							}
+							else
+							{
+								cout << "Kish......Kish......Kish...\n";
+							}
+						}
+						else
+							cout << "Error     Not your turn..!!\n ";
+					}
+					else
+						cout << "Error in Origin positioning\n";
+				}
+
+			}
 		}
 		if (dastor == 3) 
 		{
@@ -1652,18 +1859,22 @@ int main()
 			if (p == 1)
 			{
 				consoleTExtColor = 4;
+				rang = 4;
 			}
 			if (p == 2)
 			{
 				consoleTExtColor = 1;
+				rang = 1;
 			}
 			if (p == 3)
 			{
 				consoleTExtColor = 10;
+				rang = 10;
 			}
 			if (p == 4)
 			{
 				consoleTExtColor = 6;
+				rang = 6;
 			}
 			SetConsoleTextAttribute(o, consoleTExtColor);
 		}
