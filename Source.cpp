@@ -3,6 +3,10 @@
 #include <Windows.h> // to be able use handle colors job
 #define re return
 using namespace std;
+
+HANDLE o = GetStdHandle(STD_OUTPUT_HANDLE);
+int consoleTExtColor = 3;
+
 void print(int board[])
 {
 	int i = 0;
@@ -15,11 +19,15 @@ void print(int board[])
 				   " SW "," SW "," SW "," SW "," SW "," SW "," SW "," SW ",
 				   " RW "," AW "," FW "," VW "," KW "," FW "," AW "," RW "
 	};
+	consoleTExtColor = 4;
+	SetConsoleTextAttribute(o, consoleTExtColor);
 	char cha = 'A';
 	cout << endl;
 	for (int i = 1; i < 9;i++)
 		cout << "    " << i << "  ";
 	cout << endl;
+	consoleTExtColor = 15;
+	SetConsoleTextAttribute(o, consoleTExtColor);
 	{
 		cout << char(218);
 		int aa = 7;
@@ -1466,14 +1474,10 @@ bool mat3w(int board[]) // need to be fix **************************************
 }
 int main()
 {
-	HANDLE o = GetStdHandle(STD_OUTPUT_HANDLE);
-	for (int i = 0; i < 256; i++)
-	{
-		SetConsoleTextAttribute(o, i);
-		cout << i<<"_Hello world\n";
-	}
 	
-	while (0)
+	SetConsoleTextAttribute(o, consoleTExtColor);
+	
+	while (1)
 	{
 		cout << "1 new game\n";
 		cout << "2 load game\n";
@@ -1483,6 +1487,8 @@ int main()
 		cin >> dastor;
 		if (dastor == 1)
 		{
+			consoleTExtColor = 15;
+			SetConsoleTextAttribute(o, consoleTExtColor);
 			bool turn = 1;
 			int a[64];
 			for (int i = 0; i < 64; i++) a[i] = i;
@@ -1635,7 +1641,31 @@ int main()
 		}
 		if (dastor == 3) 
 		{
+			cout << "Choose the color:\n";
+			cout << "1 Red\n";
+			cout << "2 Blue\n";
+			cout << "3 Green\n";
+			cout << "4 Yellow\n";
 
+			int p;
+			cin >> p;
+			if (p == 1)
+			{
+				consoleTExtColor = 4;
+			}
+			if (p == 2)
+			{
+				consoleTExtColor = 1;
+			}
+			if (p == 3)
+			{
+				consoleTExtColor = 10;
+			}
+			if (p == 4)
+			{
+				consoleTExtColor = 6;
+			}
+			SetConsoleTextAttribute(o, consoleTExtColor);
 		}
 		if (dastor == 4) 
 		{

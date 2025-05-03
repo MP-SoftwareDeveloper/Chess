@@ -1,7 +1,7 @@
 ﻿  Source.cpp
-D:\Projects\C++_Projects\Chess\Source.cpp(312,1): warning C4715: 'checkab': not all control paths return a value
-D:\Projects\C++_Projects\Chess\Source.cpp(328,1): warning C4715: 'checkaw': not all control paths return a value
-D:\Projects\C++_Projects\Chess\Source.cpp(874,1): warning C4715: 'mat2b': not all control paths return a value
-D:\Projects\C++_Projects\Chess\Source.cpp(797,1): warning C4715: 'mat1w': not all control paths return a value
-D:\Projects\C++_Projects\Chess\Source.cpp(705,1): warning C4715: 'mat1b': not all control paths return a value
+D:\Projects\C++_Projects\Chess\Source.cpp(320,1): warning C4715: 'checkab': not all control paths return a value
+D:\Projects\C++_Projects\Chess\Source.cpp(336,1): warning C4715: 'checkaw': not all control paths return a value
+D:\Projects\C++_Projects\Chess\Source.cpp(713,1): warning C4715: 'mat1b': not all control paths return a value
+D:\Projects\C++_Projects\Chess\Source.cpp(882,1): warning C4715: 'mat2b': not all control paths return a value
+D:\Projects\C++_Projects\Chess\Source.cpp(805,1): warning C4715: 'mat1w': not all control paths return a value
   Chess.vcxproj -> D:\Projects\C++_Projects\Chess\x64\Debug\Chess.exe
